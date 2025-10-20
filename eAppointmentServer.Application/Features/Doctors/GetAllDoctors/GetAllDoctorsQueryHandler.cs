@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eAppointmentServer.Application.Features.Doctors.GetAllDoctor;
 
-internal sealed class GetAllDoctorQueryHandler : IRequestHandler<GetAllDoctorsQuery, Result<List<Doctor>>>
+internal sealed class GetAllDoctorsQueryHandler : IRequestHandler<GetAllDoctorsQuery, Result<List<Doctor>>>
 {
     private readonly IDoctorRepository _doctorRepository;
 
-    public GetAllDoctorQueryHandler(IDoctorRepository doctorRepository)
+    public GetAllDoctorsQueryHandler(IDoctorRepository doctorRepository)
     {
         _doctorRepository = doctorRepository;
     }

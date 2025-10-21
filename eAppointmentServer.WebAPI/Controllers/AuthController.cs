@@ -7,14 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace eAppointmentServer.WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [AllowAnonymous]
     public sealed class AuthController : ApiController
     {
         public AuthController(IMediator mediator) : base(mediator)
         {
         }
-
-        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginCommand request, CancellationToken cancellationToken)
         {

@@ -6,10 +6,10 @@ namespace eAppointmentServer.WebAPI.Abstractions
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public abstract class ApiController : ControllerBase
     {
-        protected readonly IMediator _mediator;
+        public readonly IMediator _mediator;
 
         protected ApiController(IMediator mediator)
         {

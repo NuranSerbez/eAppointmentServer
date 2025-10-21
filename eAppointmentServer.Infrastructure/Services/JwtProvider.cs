@@ -1,5 +1,6 @@
 ﻿using eAppointmentServer.Application.Services;
 using eAppointmentServer.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,9 +8,10 @@ using System.Text;
 
 namespace eAppointmentServer.Infrastructure.Services;
 
-public sealed class JwtProvider : IJwtProvider
+internal sealed class JwtProvider(
+    IConfiguration configuration) : IJwtProvider
 {
-    public Task<string> CreateTokenAsync(AppUser user)
+    public string CreateToken(AppUser user)
     {
         List<Claim> claims = new()
         {
@@ -21,20 +23,29 @@ public sealed class JwtProvider : IJwtProvider
 
         DateTime expires = DateTime.Now.AddDays(1);
 
-        SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(string.Join("-", Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())));
+        SymmetricSecurityKey securityKey =
+            new(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:SecretKey").Value ?? ""));
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha512);
 
         JwtSecurityToken securityToken = new(
-            issuer: "Taner Saydam",
-            audience: "eAppointment",
+            issuer: configuration.GetSection("Jwt:Issuer").Value,
+            audience: configuration.GetSection("Jwt:Audience").Value,
             claims: claims,
             notBefore: DateTime.Now,
             expires: expires,
             signingCredentials: signingCredentials);
 
         JwtSecurityTokenHandler handler = new();
+
         string token = handler.WriteToken(securityToken);
 
+        return token;
+    }
+
+    public Task<string> CreateTokenAsync(AppUser user)
+    {
+        string token = CreateToken(user);
         return Task.FromResult(token);
     }
+
 }

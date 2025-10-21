@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TS.Result;
 
-namespace eAppointmentServer.Application.Features.Appoinment.GetAllDoctorByDepartment
+namespace eAppointmentServer.Application.Features.Appoinments.GetAllDoctorByDepartment
 {
     internal sealed class GetAllDoctorsByDepartmentQueryHandler(
     IDoctorRepository doctorRepository) : IRequestHandler<GetAllDoctorsByDepartmentQuery, Result<List<Doctor>>>

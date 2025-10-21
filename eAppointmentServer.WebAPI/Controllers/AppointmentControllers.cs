@@ -1,5 +1,9 @@
-﻿using eAppointmentServer.Application.Features.Appoinment.GetAllDoctorByDepartment;
+﻿using eAppointmentServer.Application.Features.Appoinments.CreateAppointment;
+using eAppointmentServer.Application.Features.Appoinments.DeleteAppointmentById;
 using eAppointmentServer.Application.Features.Appoinments.GetAllAppointmentsByDoctorId;
+using eAppointmentServer.Application.Features.Appoinments.GetAllDoctorByDepartment;
+using eAppointmentServer.Application.Features.Appoinments.GetPatientByIdentityNumber;
+using eAppointmentServer.Application.Features.Appoinments.UpdateAppointment;
 using eAppointmentServer.WebAPI.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +31,31 @@ namespace eAppointmentServer.WebAPI.Controllers
             var response = await _mediator.Send(request, cancellationToken);
             return StatusCode(response.StatusCode, response);
         }
+        [HttpPost("GetPatientByIdentityNumber")]
+        public async Task<IActionResult> GetPatientByIdentityNumber(GetPatientByIdentityNumberQuery request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateAppointment(CreateAppointmentCommand request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpPost("DeleteById")]
+        public async Task<IActionResult> DeleteById(DeleteAppointmentByIdCommand request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update(UpdateAppointmentCommand request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            return StatusCode(response.StatusCode, response);
+        }
 
+        
     }
 }

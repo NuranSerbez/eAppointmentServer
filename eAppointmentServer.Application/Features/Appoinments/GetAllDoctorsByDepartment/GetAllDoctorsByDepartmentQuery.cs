@@ -2,6 +2,6 @@
 using MediatR;
 using TS.Result;
 
-namespace eAppointmentServer.Application.Features.Appoinment.GetAllDoctorByDepartment;
+namespace eAppointmentServer.Application.Features.Appoinments.GetAllDoctorByDepartment;
 
 public sealed record GetAllDoctorsByDepartmentQuery(int DepartmentValue) : IRequest<Result<List<Doctor>>>;

@@ -20,19 +20,13 @@ internal sealed class LoginCommandHandler(
 
         if (appUser is null)
         {
-            return Result<LoginCommandResponse>.Failure(
-                404,
-                new List<string> { "User not found" }
-            );
+            return Result<LoginCommandResponse>.Failure(404, ["User not found"]);
         }
 
         bool isPasswordCorrect = await userManager.CheckPasswordAsync(appUser, request.Password);
         if (!isPasswordCorrect)
         {
-            return Result<LoginCommandResponse>.Failure(
-                401,
-                new List<string> { "Password is wrong" }
-            );
+            return Result<LoginCommandResponse>.Failure(404, ["Password is wrong"]);
         }
 
         string token = await jwtProvider.CreateTokenAsync(appUser);
